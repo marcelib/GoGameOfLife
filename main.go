@@ -13,5 +13,10 @@ func main() {
 		ctx.View("endpoint.html")
 	})
 
+	app.Get("/message", func(ctx context.Context) {
+		ctx.Header("Access-Control-Allow-Origin", "*")
+		ctx.JSON("Welcome to My new project, GoLife!")
+	})
+
 	app.Run(iris.Addr(":8080"))
 }

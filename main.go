@@ -1,19 +1,16 @@
-package GoLife
-
-import "context"
+package main
 
 import (
-	"github.com/marcelib/iris"
-	"github.com/marcelib/iris/context"
+	"github.com/kataras/iris"
+	"github.com/kataras/iris/context"
 )
 
 func main() {
 	app := iris.New()
-	app.RegisterView(iris.HTML("../app", ".html"))
+	app.RegisterView(iris.HTML("./templates", ".html"))
 
 	app.Get("/", func(ctx context.Context) {
-		ctx.ViewData("message", "Hello world!")
-		ctx.View("hello.html")
+		ctx.View("endpoint.html")
 	})
 
 	app.Run(iris.Addr(":8080"))

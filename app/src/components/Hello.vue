@@ -2,36 +2,34 @@
   require('es6-promise').polyfill();
   require('isomorphic-fetch');
 
-  fetch('http://localhost:8080/message')
-    .then((response) => {
-      if (response.status >= 400) {
-        throw new Error('Bad response from server');
-      }
-      return response.json();
-    }).then(response => console.log(response));
-
   export default {
     name: 'hello',
     data() {
       return {
-        msg: 'Hello to my new project!',
+        title: 'Title',
+        description: '',
       };
+    },
+    created() {
+      fetch('http://localhost:8080/index')
+        .then((response) => {
+          if (response.status >= 400) {
+            throw new Error('Bad response from server');
+          }
+          return response.json();
+        })
+        .then((body) => {
+          this.title = body.title;
+          this.description = body.description;
+        });
     },
   };
 </script>
 
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank">Forum</a></li>
-      <li><a href="https://gitter.im/vuejs/vue" target="_blank">Gitter Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank">Twitter</a></li>
-      <br>
-      <li><a href="http://vuejs-templates.github.io/webpack/" target="_blank">Docs for This Template</a></li>
-    </ul>
+    <h1>{{ title }}</h1>
+    <h2>{{ description }}</h2>
   </div>
 </template>
 
